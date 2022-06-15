@@ -1,16 +1,32 @@
 import { KeyboardAvoidingView, StyleSheet, View } from 'react-native'
 import { Button, Input, Text } from 'react-native-elements'
-import React, { useState } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import { StatusBar } from 'expo-status-bar';
+import { auth } from '../firebase';
 
 const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  
   const register = () => {
-
+    auth.createUserWithEmailAndPassword(email, password)
+    .then(authUser => {
+      authUser.user.updateProfile({
+        displayName: name,
+        photoURL: imageUrl || 
+        "https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png",
+      })
+    }).catch(error => {alert(error.message)})
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerBackTitle: "Login"
+    })
+  }, [navigation]);
+  
   return (
     <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <StatusBar style='light' />
@@ -20,7 +36,6 @@ const RegisterScreen = ({ navigation }) => {
       <View style={styles.inputContainer}>
         <Input 
           placeholder='Full Name'
-          autoFocus
           value={name}
           onChange={(text) => setName(text)}
         />
