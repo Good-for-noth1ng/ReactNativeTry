@@ -128,12 +128,16 @@ const ChatSCreen = ({ navigation, route }) => {
             <ScrollView>
               {messages.map((id, data) => (
                 data.email === auth.currentUser.email ? (
-                  <View>
+                  <View key={id} style={styles.reciever}>
                     <Avatar />
+                    <Text style={styles.recieverText}>
+                      {data.message}
+                    </Text>
                   </View>
                 ) : (
-                  <View>
-
+                  <View style={styles.sender}>
+                    <Avatar />
+                    <Text style={styles.senderText}>{data.message}</Text>
                   </View>
                 )
               ))}
@@ -181,5 +185,12 @@ const styles = StyleSheet.create({
     padding: 10,
     color: "grey",
     borderRadius: 30
-  }
+  },
+
+  recieverText: {
+
+  },
+  senderText: {},
+  reciever: {},
+  sender: {},
 })
