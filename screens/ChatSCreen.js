@@ -192,5 +192,5 @@ const styles = StyleSheet.create({
   },
   senderText: {},
   reciever: {},
-  sender: {},
+  sender: {}
 })
