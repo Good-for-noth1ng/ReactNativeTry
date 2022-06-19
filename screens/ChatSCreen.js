@@ -36,7 +36,10 @@ const ChatSCreen = ({ navigation, route }) => {
         >
           <Avatar 
             rounded 
-            source={{uri: "https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png"}}
+            source={{
+              uri:
+                messages[0]?.data.photoURL || 
+                "https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png"}}
           />
           <Text
             style={{
@@ -78,7 +81,7 @@ const ChatSCreen = ({ navigation, route }) => {
         </View>
       }
     })
-  }, [navigation]);
+  }, [navigation, messages]);
 
   const sendMessage = () => {
     Keyboard.dismiss();
@@ -125,18 +128,37 @@ const ChatSCreen = ({ navigation, route }) => {
           Keyboard.dismiss
         }>
           <>
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ padding: 15 }}>
               {messages.map((id, data) => (
                 data.email === auth.currentUser.email ? (
                   <View key={id} style={styles.reciever}>
-                    <Avatar />
+                    <Avatar 
+                      position="absolute"
+                      bottom={-15}
+                      right={-5}
+                      rounded
+                      size={30}
+                      source={{
+                        uri: data.photoURL
+                      }}
+                    />
                     <Text style={styles.recieverText}>
                       {data.message}
                     </Text>
                   </View>
                 ) : (
                   <View style={styles.sender}>
-                    <Avatar />
+                    <Avatar 
+                      position="absolute"
+                      bottom={-15}
+                      right={-5}
+                      rounded
+                      size={30}
+                      source={{
+                        uri: data.photoURL
+                      }}
+                    />
+                    <Text style={styles.senderName}>{data.message}</Text>
                     <Text style={styles.senderText}>{data.message}</Text>
                   </View>
                 )
@@ -188,9 +210,43 @@ const styles = StyleSheet.create({
   },
 
   recieverText: {
-
+    color: "black",
+    fontWeight: "500",
+    marginLeft: 10
   },
-  senderText: {},
-  reciever: {},
-  sender: {}
+  
+  senderText: {
+    color: "white",
+    fontWeight: "500",
+    marginLeft: 10,
+    marginBottom: 15
+  },
+  
+  reciever: {
+    padding: 15,
+    backgroundColor: "#ECECEC",
+    alignSelf: "flex-end",
+    borderRadius: 20,
+    marginRight: 15,
+    marginBottom: 20,
+    maxWidth: "80%",
+    position: "relative"
+  },
+
+  senderName: {
+    left: 10,
+    paddingLeft: 10,
+    fontSize: 10,
+    color: "white"
+  },
+
+  sender: {
+    padding: 15,
+    backgroundColor: "#2B68E6",
+    alignSelf: "flex-start",
+    borderRadius: 20,
+    margin: 15,
+    maxWidth: "80%",
+    position: "relative"
+  }
 })
