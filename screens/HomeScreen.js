@@ -14,7 +14,6 @@ const HomeScreen = ({ navigation }) => {
       navigation.replace('Login');
     });
   };
-
   useEffect(() => {
     const unsubscribe = db.collection('chats').onSnapshot(snapshot => (
       setChat(snapshot.docs.map(doc => ({

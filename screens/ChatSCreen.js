@@ -16,7 +16,8 @@ import { StatusBar } from 'expo-status-bar'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Keyboard } from 'react-native'
 import { db, auth } from '../firebase'
-import * as firebase from "firebase"
+// import * as firebase from "firebase"
+import firebase from 'firebase/compat/app'
 
 const ChatSCreen = ({ navigation, route }) => {
   const [input, setInput] = useState("");
